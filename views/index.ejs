@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management</title>
+    <script
+      src="https://kit.fontawesome.com/c8af8f00d7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./stylesheets/style.css" />
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <nav>
+      <div class="nav__brand-logo">
+        <img src="./images/logo.png" alt="" />
+      </div>
+
+      <div class="nav__links">
+        <div class="nav__links-link"><i class="fa-solid fa-house"></i></div>
+        <div class="nav__links-link">
+          <i class="fa-brands fa-searchengin"></i>
+        </div>
+        <div class="nav__links-link">
+          <i class="fa-solid fa-right-to-bracket"></i>
+        </div>
+      </div>
+    </nav>
+
+
+      <i class="fa-solid fa-x"></i>
+    </div>
+
+    <!-- form for adding book -->
+    <form action="/" method="post" class="form__add-book">
+      <input
+        autocomplete="off"
+        autocomplete="off"
+        class="form__name"
+        type="text"
+        placeholder="Name"
+        name="bookName"
+        required
+      />
+      <input
+        autocomplete="off"
+        class="form__author"
+        type="text"
+        placeholder="Author"
+        name="bookAuthor"
+      />
+      <input
+        autocomplete="off"
+        class="form__page"
+        type="text"
+        placeholder="Pages"
+        name="bookPages"
+      />
+      <input
+        autocomplete="off"
+        class="form__price"
+        type="text"
+        placeholder="Price"
+        name="bookPrice"
+      />
+      <input
+        autocomplete="off"
+        class="form__file"
+        type="text"
+        id="myfile"
+        name="myfile"
+        placeholder="image link"
+      />
+      <button class="form__submit" type="submit">Submit</button>
+    </form>
+
+    <div class="table__div">
+      <table>
+        <caption>
+          A summary of the most famous books
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Img</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Pages</th>
+            <th scope="col">Price</th>
+            <th scope="col">Avability</th>
+            <th scope="col">Issue</th>
+            <th scope="col"><i class="fas fa-skull"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <% book.forEach(element=> { %>
+          <tr>
+            <td class="book__image">
+              <img src="<%= element.imageLink %>" alt="" />
+            </td>
+            <td scope="row"><%= element.title %></td>
+            <td><%= element.author %></td>
+            <td><%= element.pages %></td>
+            <td>₹<%= element.price %></td>
+
+            <%if(element.bookState === 'available'){ %>
+            
+              <td>
+                <form action="/issue" method="post" style="background-color: var(--lightblack-color);">
+                  <input type="text" style="display: none;" name="bookName" value="<%= element.title %>">
+                  <button class="button__issue">Issue</button>
+                </form>
+              </td>
+              <td><button class="button__return-disable">Return</button></td>
+            <% }else{ %>
+              <td><button class="button__issued">Issued</button></td>
+              
+              <td>
+                <form action="/return" method="post" style="background-color: var(--lightblack-color);">
+                  <input type="text" style="display: none;" name="bookName" value="<%= element.title %>">
+                  <button class="button__return">Return</button>
+                </form>
+              </td>
+            <% } %>
+
+            
+
+            <td>
+              <form action="/delete" method="post" class="delete-button" >
+                <input type="text" style="display: none;" name="bookName" value="<%= element.title %>">
+                <button type="submit"><i class="fas fa-times-circle"></i></button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="./javascripts/index.js"></script>
+</html>
